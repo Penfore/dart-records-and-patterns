@@ -16,6 +16,37 @@ main() async {
   // Utilizando outros tipos com os Records
   List<({double lat, double lng, double elevation})> coords = [];
   coords.add(getLocation());
+
+  // Exemplo de desestruturação de um Map
+  final Map<String, String> json = {
+    'username': 'fulvioleo',
+    'role': 'admin',
+  };
+  final {'username': String username} = json;
+  print(username);
+  // Exemplo de validação utilizando a desestruturação
+  if (json
+      // Nova funcionalidade para utilizar case dentro de um if
+      case {
+        'username': String usernameValidate,
+        'role': String roleValidate,
+      } when 'role' == 'admin') {
+    // Guard when // Validaçã adicional
+    print('$usernameValidate is $roleValidate');
+  }
+
+  // Exemplo de desestruturação de classes
+  final User(:usernameClass, :uid) = User(usernameClass: 'fulvioleo', uid: '123');
+  print('$usernameClass - $uid');
+
+  List<User> users = [
+    User(usernameClass: 'fulvioleo', uid: '1234'),
+    User(usernameClass: 'teste', uid: '12345'),
+  ];
+
+  for (final User(:usernameClass, :uid) in users) {
+    print('$usernameClass - $uid');
+  }
 }
 
 // Forma antiga para retornos múltiplos
@@ -76,4 +107,14 @@ toString((String, double) record) {
 
   // final (language, _) = record; // É possível utilizar dessa forma
   // print('Language: $language');
+}
+
+class User {
+  final String usernameClass;
+  final String uid;
+
+  User({
+    required this.usernameClass,
+    required this.uid,
+  });
 }
